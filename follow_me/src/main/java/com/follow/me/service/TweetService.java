@@ -30,8 +30,8 @@ public class TweetService {
 		consumer.start();
 	}
 	
-	public void addUser(String name) {
-		repo.addUser(name);
+	public User addUser(String name) {
+		return repo.addUser(name);
 	}
 	
 	public void sendTweet(long userId, String tweetMsg) {

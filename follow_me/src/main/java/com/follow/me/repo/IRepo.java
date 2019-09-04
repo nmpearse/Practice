@@ -7,7 +7,7 @@ import com.follow.me.pojo.User;
 
 public interface IRepo {
 
-	public void addUser(String name);
+	public User addUser(String name);
 
 	public Tweet sendTweet(long userId, String tweetMsg);
 

@@ -36,12 +36,12 @@ public class InMemoryRepo implements IRepo {
 		return tweetSeqGenerator.getNext();
 	}
 
-	public void addUser(String name) {
+	public User addUser(String name) {
 		User newUser = new User();
 		newUser.setId(getNewUserId());
 		newUser.setName(name);
 		users.put(newUser.getId(), newUser);
-
+		return newUser;
 	}
 
 	public Tweet sendTweet(long userId, String tweetMsg) {

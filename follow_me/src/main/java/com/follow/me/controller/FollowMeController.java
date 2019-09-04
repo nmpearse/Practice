@@ -47,6 +47,12 @@ public class FollowMeController {
   public List<Tweet> getHomeTimeline(@PathVariable(value = "userId") Long userId) {
 	  return service.getHomeTimeline(userId);
   }
+  
+	@PostMapping("/users")
+	public User createUser(@Valid @RequestBody String name) {
+	  return service.addUser(name);
+	}
+  
 //  
 //  /**
 //   * Gets users by id.
