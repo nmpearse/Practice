@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import org.springframework.stereotype.Service;
+
 import com.follow.me.pojo.Tweet;
 import com.follow.me.pojo.User;
 import com.follow.me.queue.Consumer;
@@ -13,6 +15,7 @@ import com.follow.me.repo.IRepo;
 import com.follow.me.repo.InMemoryRepo;
 import com.follow.me.repo.LocalCache;
 
+@Service
 public class TweetService {
 	
 	

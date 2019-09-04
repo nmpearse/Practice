@@ -6,37 +6,42 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import org.springframework.stereotype.Repository;
 
 import com.follow.me.pojo.Tweet;
 import com.follow.me.pojo.User;
 
+
+@Repository
 public class InMemoryRepo implements IRepo {
 
 	private static Map<Long, User> users = new HashMap<>();
 	/**
 	 * Mapping contains list of users who an user is following
-	 * */
+	 */
 	private static Map<Long, List<Long>> userFollowing = new HashMap<>();
-	
+
 	private static List<Tweet> tweets = new ArrayList<>();
-		
+
 	private static SequenceGenerator userSeqGenerator = new SequenceGenerator();
 	private static SequenceGenerator tweetSeqGenerator = new SequenceGenerator();
-	
+
 	public long getNewUserId() {
 		return userSeqGenerator.getNext();
 	}
-	
+
 	public long getNewTweetId() {
 		return tweetSeqGenerator.getNext();
 	}
-	
+
 	public void addUser(String name) {
 		User newUser = new User();
 		newUser.setId(getNewUserId());
 		newUser.setName(name);
 		users.put(newUser.getId(), newUser);
-		
+
 	}
 
 	public Tweet sendTweet(long userId, String tweetMsg) {
@@ -50,14 +55,25 @@ public class InMemoryRepo implements IRepo {
 	}
 
 	public List<Tweet> getUserTimeline(long userId) {
-		return tweets.stream().filter(t -> t.getUserId()==userId).collect(Collectors.toList());
+		if (tweets.size()> 0) {
+			return tweets.stream().filter(t -> t.getUserId() == userId).collect(Collectors.toList());
+		}
+		return new ArrayList<>();
 	}
 
 	public List<Tweet> getHomeTimeline(long userId) {
 		List<Long> followeeeList = userFollowing.getOrDefault(userId, new ArrayList<Long>());
-		return tweets.stream().filter(t -> followeeeList.contains(t.getUserId())).collect(Collectors.toList());
+		
+		if (tweets.size()> 0 && followeeeList.size()>0) {
+			Stream<Tweet> tweetStream = tweets.stream().filter(t -> followeeeList.contains(t.getUserId()));
+			if (tweetStream != null) {
+				return tweetStream.collect(Collectors.toList());
+			}
+		}
+		return new ArrayList<>();
+
 	}
-	
+
 	public void startFollowing(long userId, long followeeId) {
 		List<Long> userFollowingList = userFollowing.getOrDefault(userId, new ArrayList<Long>());
 		userFollowingList.add(followeeId);
