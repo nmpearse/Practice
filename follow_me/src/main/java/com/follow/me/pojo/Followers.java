@@ -7,14 +7,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class Tweet {
+public class Followers {
 	
 	@Id
 	@GeneratedValue
 	private long id;
-	private String message;
 	private long userId;
-	private Date tweetedOn;
+	private long followeeId;
+	private Date followedOn;
 	
 	public long getId() {
 		return id;
@@ -22,24 +22,26 @@ public class Tweet {
 	public void setId(long id) {
 		this.id = id;
 	}
-	public String getMessage() {
-		return message;
-	}
-	public void setMessage(String message) {
-		this.message = message;
-	}
 	public long getUserId() {
 		return userId;
 	}
 	public void setUserId(long userId) {
 		this.userId = userId;
 	}
-	public Date getTweetedOn() {
-		return tweetedOn;
+	public long getFolloweeId() {
+		return followeeId;
 	}
-	public void setTweetedOn(Date tweetedOn) {
-		this.tweetedOn = tweetedOn;
+	public void setFolloweeId(long followeeId) {
+		this.followeeId = followeeId;
 	}
+	public Date getFollowedOn() {
+		return followedOn;
+	}
+	public void setFollowedOn(Date followedOn) {
+		this.followedOn = followedOn;
+	}
+	
+	
 	
 	
 

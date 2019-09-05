@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.follow.me.pojo.Tweet;
@@ -12,14 +13,13 @@ import com.follow.me.pojo.User;
 import com.follow.me.queue.Consumer;
 import com.follow.me.queue.Publisher;
 import com.follow.me.repo.IRepo;
-import com.follow.me.repo.InMemoryRepo;
 import com.follow.me.repo.LocalCache;
 
 @Service
 public class TweetService {
 	
-	
-	IRepo repo = new InMemoryRepo();
+	@Autowired
+	IRepo repo;
 	
 	private static BlockingQueue<Tweet> queue = new LinkedBlockingQueue<>();
 	private static Publisher publisher = new Publisher(queue);
