@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.follow.me.pojo.StringDTO;
 import com.follow.me.pojo.Tweet;
 import com.follow.me.pojo.User;
 import com.follow.me.service.TweetService;
@@ -49,8 +50,20 @@ public class FollowMeController {
   }
   
 	@PostMapping("/users")
-	public User createUser(@Valid @RequestBody String name) {
-	  return service.addUser(name);
+	public User createUser(@Valid @RequestBody StringDTO message) {
+	  return service.addUser(message.getValue());
+	}
+	
+	@PutMapping("/follow/{userId}/{followeeId}")
+	public ResponseEntity<String> startFollowing(@PathVariable(value = "userId") Long userId, @PathVariable(value = "followeeId") Long followeeId) {
+	  service.startFollowing(userId, followeeId);
+	  return ResponseEntity.ok().body("Success");
+	}
+	
+	@PostMapping("/tweet/{userId}")
+	public ResponseEntity<String> sendTweet(@PathVariable(value = "userId") Long userId, @Valid @RequestBody StringDTO message) {
+	  service.sendTweet(userId, message.getValue());
+	  return ResponseEntity.ok().body("Success");
 	}
   
 //  

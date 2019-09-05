@@ -45,17 +45,17 @@ public class H2Repo implements IRepo {
 
 	@Override
 	public List<Tweet> getUserTimeline(long userId) {
+		return tweetRepo.findByuserIdOrderById(userId);
+	}
+
+	@Override
+	public List<Tweet> getHomeTimeline(long userId) {
 		List<Followers> followeeList = followerRepo.findByUserId(userId);
 		List<Tweet> tweetList = new ArrayList<>();
 		followeeList.stream().forEach(follower -> 
 			tweetList.addAll(tweetRepo.findByuserIdOrderById(follower.getFolloweeId()))
 		);
 		return tweetList;
-	}
-
-	@Override
-	public List<Tweet> getHomeTimeline(long userId) {
-		return tweetRepo.findByuserIdOrderById(userId);
 	}
 
 	@Override
